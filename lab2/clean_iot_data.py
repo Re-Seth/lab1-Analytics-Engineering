@@ -110,7 +110,7 @@ for dev_id, grp_idx in df.groupby("device_id", dropna=True).groups.items():
     idx = list(grp_idx)
     # temp_c: interpolate ตามลำดับเวลาของอุปกรณ์นั้น ๆ
     before = df.loc[idx, "temp_c"]
-    interpolated = before.interpolate(method="linear", limit_direction="both")
+    interpolated = before.interpolate(method="linear", limit_direction="both").round(1) # เพื่มให้ใช้ทศนิยมแค่ 1
     changed = before.isna() & interpolated.notna()
     df.loc[idx, "temp_c_imputed"] = changed
     df.loc[idx, "temp_c"] = interpolated
